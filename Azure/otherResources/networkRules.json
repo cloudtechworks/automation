@@ -1,0 +1,30 @@
+[
+    {
+        "Name": "Net-Coll01",
+        "Priority": 100,
+        "ActionType": "Allow",
+        "Rules": [
+            {
+                "Name": "Allow-HTTP",
+                "SourceAddress": ["10.0.1.0/24"],
+                "DestinationAddress": ["192.168.1.10"],
+                "DestinationPort": ["80"],
+                "Protocol": "Tcp"
+            }
+        ]
+    },
+    {
+        "Name": "Net-Coll02",
+        "Priority": 150,
+        "ActionType": "Deny",
+        "Rules": [
+            {
+                "Name": "Deny-SSH",
+                "SourceAddress": ["10.0.2.0/24"],
+                "DestinationAddress": ["192.168.1.20"],
+                "DestinationPort": ["22"],
+                "Protocol": "Tcp"
+            }
+        ]
+    }
+]

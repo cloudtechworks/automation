@@ -1,0 +1,28 @@
+[
+    {
+        "Name": "App-Coll01",
+        "Priority": 200,
+        "ActionType": "Allow",
+        "Rules": [
+            {
+                "Name": "Allow-Google",
+                "SourceAddress": "10.0.2.0/24",
+                "Protocol": ["http", "https"],
+                "TargetFqdn": ["www.google.com"]
+            }
+        ]
+    },
+    {
+        "Name": "App-Coll02",
+        "Priority": 300,
+        "ActionType": "Deny",
+        "Rules": [
+            {
+                "Name": "Deny-Facebook",
+                "SourceAddress": "10.0.3.0/24",
+                "Protocol": ["http", "https"],
+                "TargetFqdn": ["www.facebook.com"]
+            }
+        ]
+    }
+]
