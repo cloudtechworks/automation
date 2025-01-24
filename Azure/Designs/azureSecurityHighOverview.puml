@@ -1,0 +1,51 @@
+@startuml
+!define RECTANGLE class
+
+RECTANGLE AzureVNET {
+    Network segmentation
+}
+
+RECTANGLE AzureNSG {
+    Traffic control
+}
+
+RECTANGLE AzureFirewall {
+    Centralized network protection
+    Built-in threat intelligence
+}
+
+RECTANGLE AzureFrontDoorwithWAF {
+    Application acceleration
+    Security
+}
+
+RECTANGLE AzureDDoSProtection {
+    Protection against DDoS attacks
+}
+
+RECTANGLE VirtualMachine {
+    Compute resources
+}
+
+RECTANGLE AppGatewaywithWAF {
+    Application load balancing
+    Web application firewall
+}
+
+RECTANGLE Website {
+    Hosted web application
+}
+
+AzureVNET --> AzureFirewall : Integrates with
+AzureNSG <--> AzureVNET : Integrates with
+AzureDDoSProtection --> AzureFirewall : Protects
+AzureDDoSProtection --> AzureNSG : Protects
+AzureDDoSProtection --> AppGatewaywithWAF : Protects
+AzureDDoSProtection --> AzureFrontDoorwithWAF : Protects
+AzureDDoSProtection --> Website : Protects
+AzureDDoSProtection --> VirtualMachine : Protects
+VirtualMachine --> AzureVNET : Running in
+Website --> AzureVNET : Running in
+Website --> AppGatewaywithWAF : Behind
+Website --> AzureFrontDoorwithWAF : Behind
+@enduml
