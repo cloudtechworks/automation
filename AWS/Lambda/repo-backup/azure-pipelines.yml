@@ -1,0 +1,71 @@
+# schedules: #If required this can be enabled to schedule runs
+#   - cron: "0 12 * * FRI"
+#     branches:
+#       include:
+#         - master #remove if using main
+#         - main #remove if using master
+#     displayName: 'Every friday at 12pm'
+#     always: true #always run. Feel free to change
+
+trigger:
+- master #remove if using main
+- main #remove if using master
+# - features/* # No need. This is only supposed to be triggered at master. But you could add this for testing the functionality
+
+# pool:
+#   name: Release Agent Pool #Replace with your agent pool. Optional
+
+variables: 
+  - name: BackupCode
+    value: 'backup.py'
+  - group: repo-mgmt #replace with your group
+  - group: cred-auto #replace with your group (if applicable)
+stages:
+- stage: RepoBackup
+  jobs:
+    - job: GetAllRepos
+      displayName: Get Repo's from Azure DevOps and GitHub
+      steps:
+        - checkout: self
+          path: "./s/buildTarget"
+          fetchDepth: 0
+        - task: CopyFiles@2
+          inputs:
+            SourceFolder: '$(Build.SourcesDirectory)' # Source directory where the script is located
+            Contents: '$(BackupCode)' # Name of the script file to copy
+            TargetFolder: '$(Build.SourcesDirectory)/s/buildTarget'
+          displayName: Copy python sourcefiles to build target
+        ###Copied from Python deploy
+        - task: PipAuthenticate@1
+          displayName: Pip Authenticate
+          inputs:
+            artifactFeeds: "python-libraries"
+            onlyAddExtraIndex: true
+        - task: UsePythonVersion@0
+          displayName: 'Use Python 3.13'
+          inputs:
+            versionSpec: 3.13
+        ### End of copy action
+        - script: |
+            pip install --upgrade pip
+            pip install --upgrade virtualenv
+            pip install zipfile
+            pip install boto3
+            pip install botocore
+            pip install requests
+          displayName: Install Prerequisites for Python code
+        - task: PythonScript@0
+          inputs:
+            scriptSource: 'filePath'
+            scriptPath: '$(Build.SourcesDirectory)/s/buildTarget/$(BackupCode)'
+          displayName: Run Python Code
+          env:
+              GITHUB_ORG: 'MY-GitHub-ORG' #replace with your variable. Name of the Github Organization. Hardcoded as this will always be the same
+              AZURE_DEVOPS_ORG: 'My-AzureDevOps-ORG' #replace with your variable. Name of the Azure DevOps Organization. Hardcoded as this will always be the same
+              VSTS_TOKEN: $(VSTS_TOKEN_OLD) #replace with your variable. Contains the token to authenticate to Azure DevOps (ADO). This originates from the variable group. In my case repo-mgmt
+              GIT_TOKEN: $(gitaccesskey) #replace with your variable. Contains the token to authenticate to GitHub.  This originates from the variable group. In my case repo-mgmt
+              AWS_ACCESS_KEY: $(AccessKey) #replace with your variable. Contains the AccessKey to authenticate to AWS. This originates from the variable group. In my case cred-auto
+              AWS_ACCESS_SECRET: $(AccessSecretKey) #replace with your variable. Contains the AccessSecretKey to authenticate to AWS. This originates from the variable group. In my case cred-auto
+              S3_BUCKET_NAME: 'MY-S3-Bucket' #replace with your variable. Contains the name of the S3 bucket. Hardcoded as this will always be the same
+              ACCESS_ROLE_ARN: 'arn:aws:iam::123456789012:role/YourRoleName' #replace with your variable. Contains the resource ID (ARN) of the role you want to use. Hardcoded as this will always be the same
+              REGION: 'eu-west-1' #replace with your variable. Contains the location of the aws resources (for making sts connection). Hardcoded as this will likely remain the same
