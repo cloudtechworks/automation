@@ -7,12 +7,15 @@ param sharedkey string
 
 param authKeyNames array
 
+@description('Required tags')
+param tags object = {
+  MyKey: 'Value'
+}
+
 resource expressRouteCircuit_name 'Microsoft.Network/expressRouteCircuits@2024-01-01' = {
   name: expressRouteCircuit.name
   location: location
-  tags: {
-    MyTags: 'Value' // Add your tags here
-  }
+  tags: tags
   sku: {
     name: '${expressRouteCircuit.tier}_${expressRouteCircuit.family}'
     tier: expressRouteCircuit.tier

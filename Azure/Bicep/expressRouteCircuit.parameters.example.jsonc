@@ -23,7 +23,7 @@
     "sharedkey": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/replacemesubscription/resourceGroups/replacemerg/providers/Microsoft.KeyVault/vaults/replacemekv" //Replace with your Key Vault ID
+          "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/replacemerg/providers/Microsoft.KeyVault/vaults/replacemekv" //Replace with your Key Vault ID
         },
         "secretName": "replaceme-secret" //Replace with your Secret Name
       }
