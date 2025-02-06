@@ -1,0 +1,22 @@
+TargetAccountAliases:
+ - your-target-account # Replace with your target account alias
+ - your-target-account-2 # Replace with your target account alias (or remove)
+ResponseFile: ./response/install-qualys-agent-association.all.log
+CloudFormationOptions:
+  StackName: ssm-qualys-agent-install # Replace with your stack name
+  Tags:
+    - Key: MyKey
+      Value: MyValue
+  Capabilities:
+    - CAPABILITY_NAMED_IAM
+  Parameters:
+    - ParameterKey: ActivateSchedule
+      ParameterValue: "true"
+    - ParameterKey: QualysActivationId
+      ParameterValue: "00000000-0000-0000-0000-000000000000" # Replace with your Qualys Activation ID
+    - ParameterKey: QualysCustomerId
+      ParameterValue: "00000000-0000-0000-0000-000000000000" # Replace with your Qualys Customer ID
+    - ParameterKey: QualysAgentVersionLinux
+      ParameterValue: "1.0.0-1" # Replace with the latest version for Linux
+    - ParameterKey: QualysAgentVersionWindows
+      ParameterValue: "1.0.0.1" # Replace with the latest version for Windows

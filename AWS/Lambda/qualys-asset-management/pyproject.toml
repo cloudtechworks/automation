@@ -1,0 +1,20 @@
+[project]
+name = "qualys-asset-management"
+version = "1.0.0"
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint.master]
+disable = [
+    "missing-docstring",
+    "C0114",
+    "logging-fstring-interpolation",
+]
+
+[tool.pylint.FORMAT]
+max-line-length=130
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = []
