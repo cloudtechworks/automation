@@ -25,3 +25,5 @@ These may also include snippets hence be aware that you might have to adjust cod
 - Get_Specific_AzResources_per_Subscription.ps1 - [Script] Powershell script which enables you to Get RG's and Storage accounts across all subscriptions (foreach).
 - GetAzPolicyResources.ps1 - [Script] Powershell script that collects the state of all your resources across subscriptions by querying azure policy (each policy)
 - Install_AZ_Module_and_Connect.ps1 - [Snippet] Powershell script which allows you to force install the az module and run a connect-azaccount.
+- namingConventionService.ps1 - [Script] Powershell script that helps you name your resources logically and automatically
+- createRGInterface.psf - [GUI-Script] Powershell (GUI) script that aids you in creating RG's in Azure 
