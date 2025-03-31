@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "expressRouteCircuit": {
+      "value": {
+        "name": "ReplaceMeExpressRoute", //Replace with your ExpressRoute Circuit Name
+        "tier": "Premium", //Standard or Premium
+        "family": "MeteredData", //MeteredData or UnlimitedData
+        "serviceProviderName": "ReplaceMe", //Replace with your Service Provider Name
+        "peeringLocation": "Dublin", //Replace with your Peering Location
+        "bandwidthInMbps": 1000 //Replace with your Bandwidth in Mbps
+      }
+    },
+    "peering": {
+      "value": {
+        "peerASN": 65000, //Replace with your Peer ASN
+        "primaryPeerAddressPrefix": "10.10.10.11/30", //Replace with your Primary Peer Address Prefix
+        "secondaryPeerAddressPrefix": "10.10.10.12/30", //Replace with your Secondary Peer Address Prefix
+        "vlanId": 1000 //Replace with your VLAN ID
+      }
+    },
+    "sharedkey": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/replacemerg/providers/Microsoft.KeyVault/vaults/replacemekv" //Replace with your Key Vault ID
+        },
+        "secretName": "replaceme-secret" //Replace with your Secret Name
+      }
+    },
+    "authKeyNames": {
+      "value": [
+        //You can add the authentication keys by specifying AUTH- followed by the name of the ExpressRoute Circuit followed by a - and the name of the Virtual Network Gateway 
+        {
+          "name": "AUTH-{ercName}-{vngName}" //ReplaceMe
+        },
+        {
+          "name": "AUTH-{ercName}-{vngName2}" //ReplaceMe
+        }
+      ]
+    }
+  }
+}
